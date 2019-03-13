@@ -1,0 +1,10 @@
+<hello xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <capabilities>
+    <capability>
+      http://example.com/foo?module=foo&amp;features=miracle
+    </capability>
+    <capability>
+      http://example.com/bar?module=bar
+    </capability>
+  </capabilities>
+</hello>
