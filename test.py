@@ -1,25 +1,30 @@
+# -----------------------------------------------------------------------------
+# Imports
+# -----------------------------------------------------------------------------
+
+# Library for NETCONF clients. Offer API to map XML to Python construct.
+
 from ncclient import manager
-import xml.dom.minidom
+from pprint import pprint
 
-#m = manager.connect(host='10.29.1.110', port=830, username='cisco',password='cisco', device_params={'name': 'csr'})
+HOST = "ios-xe-mgmt.cisco.com"
+PORT = 10000
+USER = "root"
+PASS = "D_Vay!_10&"
 
-HOST = 'ios-xe-mgmt.cisco.com'
-PORT = 8181
-USER = 'root'
-PASS = 'D_Vay!_10&'
+# SSH into device.
 
-netconf_connection = manager.connect(host=HOST,
-    port=PORT,
-    username=USER,
-    password=PASS,
-    hostkey_verify=False)
+with manager.connect(host=HOST, port=PORT, username=USER, password=PASS, hostkey_verify=False, allow_agent=False, look_for_keys=False) as device:
 
+    pprint(device)
+    pprint(device.connected)
+    pprint(device.session_id)
 
-#config = netconf_connection.get_config("running")
+    xmlResult = device.get_config(source='running').data_xml
 
-print(netconf_connection)
+    print(device.data_xml)
 
-#print(xml.dom.minidom.parseString(config.xml).toprettyxml())
+    # Write result into xml file.
 
-#for c in m.server_capabilities:
-#    print(c)
+    with open("%s.xml" % HOST, 'w') as f:
+        f.write(xmlResult)
