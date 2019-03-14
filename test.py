@@ -12,6 +12,9 @@ import xmltodict
 # Application
 # -----------------------------------------------------------------------------
 
+# ssh -p 10000 root@ios-xe-mgmt.cisco.com
+# putty.exe -ssh root@ios-xe-mgmt.cisco.com -P 10000 -pw "D_Vay!_10&"
+
 HOST_ADDRESS = "ios-xe-mgmt.cisco.com"
 NETCONF_PORT = 10000
 USERNAME = "root"
@@ -27,15 +30,29 @@ with manager.connect(host=HOST_ADDRESS,
     allow_agent=False, 
     look_for_keys=False) as deviceManager:
 
-    pprint(deviceManager)
-    pprint(deviceManager.connected)
-    pprint(deviceManager.session_id)
 
-    xmlResult = deviceManager.get_config(source='running').data_xml
+    # -----------------------------------------------------------------------------
+    # Get Device Status
+    # -----------------------------------------------------------------------------
 
-    print(deviceManager.data_xml)
+    print("Device Connected:")
+    print(deviceManager.connected)
 
-    # Write result into xml file.
+    print("Session ID: ") 
+    print(deviceManager.session_id)
 
-    with open("%s.xml" % HOST_ADDRESS, 'w') as f:
-        f.write(xmlResult)
+    # -----------------------------------------------------------------------------
+    # Get Capabilities
+    # -----------------------------------------------------------------------------
+
+    #for c in deviceManager.server_capabilities:
+    #    print(c)
+
+    # -----------------------------------------------------------------------------
+    # Get xml from source and print to output.
+    # -----------------------------------------------------------------------------
+
+    #xmlResult = deviceManager.get_config(source='running').data_xml
+    
+    #with open("%s.xml" % HOST_ADDRESS, 'w') as f:
+    #    f.write(xmlResult)
